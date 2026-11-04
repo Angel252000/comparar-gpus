@@ -11,11 +11,14 @@ class handler(BaseHTTPRequestHandler):
     def _json(self, code, data):
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Cache-Control", "public, s-maxage=3600")  # la base es fija
         self.end_headers()
         self.wfile.write(json.dumps(data, ensure_ascii=False).encode())
 
     def do_GET(self):
         q = parse_qs(urlparse(self.path).query)
+        if "lista" in q:
+            return self._json(200, {"gpus": NOMBRES})
         if "q" in q:
             n = extraer_local(q["q"][0])
             if len(n) < 2:
