@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comparador de GPUs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Comparador de GPUs</h1>
+  <p class="sub">Escribe algo como "RTX 5070 vs RX 9070 XT" o elige dos tarjetas.</p>
+  <form id="f">
+    <input id="q" placeholder="Quiero comparar una RTX 5070 y una RX 9070 XT" autocomplete="off">
+    <button>Comparar</button>
+  </form>
+  <p id="msg" role="status"></p>
+  <table id="t" hidden><thead><tr><th></th><th id="h1"></th><th id="h2"></th></tr></thead><tbody></tbody></table>
+  <p id="g"></p>
+  <p class="nota">Datos aproximados con fines didacticos.</p>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
