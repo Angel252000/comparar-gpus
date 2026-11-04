@@ -30,3 +30,20 @@ Web local: `vercel dev`.
 - `public/` interfaz web
 
 > Los numeros de `gpus.json` son aproximados; la pagina original carga su tabla con JavaScript y no se pudo extraer automaticamente.
+
+## API
+
+| Peticion | Respuesta |
+|---|---|
+| `GET /api/comparar?q=RTX 5070 vs RX 9070 XT` | Comparacion detectando las GPUs en el texto |
+| `GET /api/comparar?gpu1=RTX 5070&gpu2=RX 9070 XT` | Comparacion con nombres exactos |
+| `GET /api/comparar?lista=1` | `{"gpus": [...]}` con los nombres disponibles |
+
+Errores: `400` si el texto no contiene dos GPUs conocidas, `404` si un nombre no existe (incluye `sugerencias`).
+
+## Pruebas
+```
+python3 -m unittest -v
+python3 comparar.py --lista            # ver la base
+python3 comparar.py --modelo gemma3:4b "RTX 5070 vs RX 9070 XT"
+```
