@@ -24,3 +24,17 @@ def buscar(nombre):
 def fps_por_100(g):
     """Valor: cuantos FPS se obtienen por cada $100 del precio de salida."""
     return g["fps_promedio"] / g["precio_usd"] * 100
+
+
+def comparar(a, b):
+    """Compara dos GPUs y devuelve un dict con filas y ganadores."""
+    filas = [
+        ("Rendimiento", a["rendimiento"], b["rendimiento"], ""),
+        ("FPS promedio", a["fps_promedio"], b["fps_promedio"], ""),
+        ("VRAM", a["vram_gb"], b["vram_gb"], " GB"),
+        ("TDP", a["tdp_w"], b["tdp_w"], " W"),
+        ("Precio", a["precio_usd"], b["precio_usd"], " USD"),
+        ("FPS/$100", round(fps_por_100(a), 1), round(fps_por_100(b), 1), ""),
+    ]
+    return {"gpu_1": a["nombre"], "gpu_2": b["nombre"],
+            "filas": [{"metrica": m, "v1": x, "v2": y, "unidad": u} for m, x, y, u in filas]}
