@@ -20,6 +20,7 @@ async function consultar(url) {
   // colores y nombres de cada mitad
   document.documentElement.style.setProperty("--ca", COLOR[d.marca_1]);
   document.documentElement.style.setProperty("--cb", COLOR[d.marca_2]);
+  window.GPU3D?.setColors(COLOR[d.marca_1], COLOR[d.marca_2]);
   $("ga").textContent = d.gpu_1; $("gb").textContent = d.gpu_2;
   $("h1").textContent = d.gpu_1; $("h2").textContent = d.gpu_2;
   if ($("s1").value !== d.gpu_1) $("s1").value = d.gpu_1;
