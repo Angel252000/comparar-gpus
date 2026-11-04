@@ -44,3 +44,18 @@ def comparar(a, b):
     }
     return {"gpu_1": a["nombre"], "gpu_2": b["nombre"], "ganadores": ganadores,
             "filas": [{"metrica": m, "v1": x, "v2": y, "unidad": u} for m, x, y, u in filas]}
+
+
+def extraer_local(texto):
+    """Sin modelo: detecta nombres de la base dentro del texto (para Vercel, donde no hay Ollama)."""
+    t = " " + texto.lower() + " "
+    hallados = []
+    for n in sorted(NOMBRES, key=len, reverse=True):  # los largos primero: 'RTX 5070 Ti' antes que 'RTX 5070'
+        i = t.find(" " + n.lower() + " ")
+        if i == -1:
+            i = t.find(" " + n.lower().split(" ", 1)[-1] + " ") if False else -1
+        if i != -1:
+            hallados.append((i, n))
+            t = t[:i] + " " * (len(n) + 2) + t[i + len(n) + 2:]
+    hallados.sort()
+    return [n for _, n in hallados]
