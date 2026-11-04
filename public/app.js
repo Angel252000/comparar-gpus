@@ -3,8 +3,14 @@ const mejor = {"FPS promedio": 1, "Rendimiento": 1, "VRAM": 1, "FPS/$100": 1, "T
 
 async function consultar(url) {
   $("msg").textContent = ""; $("t").hidden = true; $("g").textContent = "";
-  const r = await fetch(url);
-  const d = await r.json();
+  let r, d;
+  try {
+    r = await fetch(url);
+    d = await r.json();
+  } catch {
+    $("msg").textContent = "No se pudo conectar con el servidor. Intenta de nuevo.";
+    return;
+  }
   if (!r.ok) {
     $("msg").textContent = d.error + (d.sugerencias?.length ? " Sugerencias: " + d.sugerencias.join(", ") : "") +
       (d.disponibles ? " Disponibles: " + d.disponibles.join(", ") : "");
