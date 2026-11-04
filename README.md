@@ -31,6 +31,10 @@ Web local: `vercel dev`.
 
 > Los numeros de `gpus.json` son aproximados; la pagina original carga su tabla con JavaScript y no se pudo extraer automaticamente.
 
+## Formas de escribir que entiende
+`RTX5070Ti vs rx9070xt` · `5070 y 9070xt` · `4070s o 4060` · `geforce rtx 5070 con la radeon 9070 xt` · `RX 7800-XT` · `ARC b580 contra a770` · mayusculas, acentos, signos y espacios de mas.
+Si pides algo que no esta en la base (`rtx 3060`, `5070 super`) lo dice en vez de adivinar.
+
 ## API
 
 | Peticion | Respuesta |
