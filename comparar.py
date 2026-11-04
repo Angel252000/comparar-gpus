@@ -23,3 +23,12 @@ def extraer_gpus(texto):
     req = urllib.request.Request(URL, json.dumps(body).encode(), {"Content-Type": "application/json"})
     r = json.load(urllib.request.urlopen(req, timeout=120))
     return json.loads(r["message"]["content"])
+
+
+def imprimir(c):
+    w = max(len(c["gpu_1"]), len(c["gpu_2"]), 8)
+    print(f"\n{'':14}{c['gpu_1']:>{w+2}}{c['gpu_2']:>{w+2}}")
+    for f in c["filas"]:
+        print(f"{f['metrica']:14}{str(f['v1'])+f['unidad']:>{w+2}}{str(f['v2'])+f['unidad']:>{w+2}}")
+    g = c["ganadores"]
+    print(f"\nMas rapida: {g['mas_rapida']} | Mejor valor: {g['mejor_valor']} | Mas eficiente: {g['mas_eficiente']}")
