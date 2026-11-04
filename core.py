@@ -36,5 +36,11 @@ def comparar(a, b):
         ("Precio", a["precio_usd"], b["precio_usd"], " USD"),
         ("FPS/$100", round(fps_por_100(a), 1), round(fps_por_100(b), 1), ""),
     ]
-    return {"gpu_1": a["nombre"], "gpu_2": b["nombre"],
+    mejor = lambda f1, f2: a["nombre"] if f1 > f2 else b["nombre"] if f2 > f1 else "empate"
+    ganadores = {
+        "mas_rapida": mejor(a["fps_promedio"], b["fps_promedio"]),
+        "mejor_valor": mejor(fps_por_100(a), fps_por_100(b)),
+        "mas_eficiente": mejor(a["fps_promedio"] / a["tdp_w"], b["fps_promedio"] / b["tdp_w"]),
+    }
+    return {"gpu_1": a["nombre"], "gpu_2": b["nombre"], "ganadores": ganadores,
             "filas": [{"metrica": m, "v1": x, "v2": y, "unidad": u} for m, x, y, u in filas]}
