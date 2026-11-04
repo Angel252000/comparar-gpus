@@ -19,3 +19,8 @@ def buscar(nombre):
         return next(g for g in DB if g["nombre"] == sub[0]), []
     cerca = difflib.get_close_matches(n, list(norm), n=3, cutoff=0.6)
     return None, [norm[c] for c in cerca] or NOMBRES[:5]
+
+
+def fps_por_100(g):
+    """Valor: cuantos FPS se obtienen por cada $100 del precio de salida."""
+    return g["fps_promedio"] / g["precio_usd"] * 100
