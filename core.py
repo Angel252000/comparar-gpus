@@ -42,7 +42,8 @@ def comparar(a, b):
         "mejor_valor": mejor(fps_por_100(a), fps_por_100(b)),
         "mas_eficiente": mejor(a["fps_promedio"] / a["tdp_w"], b["fps_promedio"] / b["tdp_w"]),
     }
-    return {"gpu_1": a["nombre"], "gpu_2": b["nombre"], "ganadores": ganadores,
+    return {"gpu_1": a["nombre"], "gpu_2": b["nombre"], "marca_1": a["marca"], "marca_2": b["marca"],
+            "ganadores": ganadores,
             "filas": [{"metrica": m, "v1": x, "v2": y, "unidad": u} for m, x, y, u in filas]}
 
 

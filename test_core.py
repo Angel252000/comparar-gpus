@@ -22,6 +22,7 @@ class TestCore(unittest.TestCase):
         c = comparar(buscar("RTX 5070")[0], buscar("RX 9070 XT")[0])
         self.assertEqual(c["ganadores"]["mas_rapida"], "RX 9070 XT")
         self.assertEqual(c["ganadores"]["mas_eficiente"], "RTX 5070")
+        self.assertEqual((c["marca_1"], c["marca_2"]), ("NVIDIA", "AMD"))
 
 
 if __name__ == "__main__":
