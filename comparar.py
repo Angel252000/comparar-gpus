@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """CLI: Ollama extrae las dos GPUs del mensaje y Python las compara."""
 import json, sys, urllib.request
-from core import DB, NOMBRES, buscar, comparar
+from core import DB, NOMBRES, analizar, buscar, comparar
 
 MODEL = "gemma3:1b"
 if "--modelo" in sys.argv:  # ej: --modelo gemma3:4b
@@ -51,8 +51,17 @@ def main():
             break
         try:
             p = extraer_gpus(texto)
+            if not (buscar(p.get("gpu_1", ""))[0] and buscar(p.get("gpu_2", ""))[0]):
+                raise ValueError("el modelo no devolvio dos GPUs validas")
         except Exception as e:
-            print(f"Error con Ollama ({e}). Esta corriendo `ollama serve`?")
+            # respaldo sin modelo: el extractor tolerante lee el texto directamente
+            r = analizar(texto)
+            if r["desconocidas"]:
+                print("No tengo en la base: " + ", ".join(r["desconocidas"]))
+            elif len(r["encontradas"]) >= 2:
+                imprimir(comparar(*(buscar(n)[0] for n in r["encontradas"][:2])))
+            else:
+                print(f"No pude entender las dos GPUs ({e}). Ejemplo: RTX 5070 vs RX 9070 XT")
         else:
             a, sa = buscar(p.get("gpu_1", ""))
             b, sb = buscar(p.get("gpu_2", ""))

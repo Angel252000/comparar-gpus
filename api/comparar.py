@@ -4,7 +4,7 @@ from http.server import BaseHTTPRequestHandler
 from urllib.parse import parse_qs, urlparse
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from core import NOMBRES, buscar, comparar, extraer_local
+from core import NOMBRES, analizar, buscar, comparar
 
 
 class handler(BaseHTTPRequestHandler):
@@ -20,9 +20,14 @@ class handler(BaseHTTPRequestHandler):
         if "lista" in q:
             return self._json(200, {"gpus": NOMBRES})
         if "q" in q:
-            n = extraer_local(q["q"][0])
+            r = analizar(q["q"][0])
+            n = r["encontradas"]
+            if r["desconocidas"]:
+                return self._json(404, {"error": "No tengo en la base: " + ", ".join(r["desconocidas"]) + ".",
+                                        "disponibles": NOMBRES})
             if len(n) < 2:
-                return self._json(400, {"error": "Escribe dos GPUs de la lista.", "disponibles": NOMBRES})
+                falta = f"Solo entendi {n[0]}; falta la segunda GPU." if n else "No entendi ninguna GPU."
+                return self._json(400, {"error": falta + " Ejemplo: RTX 5070 vs RX 9070 XT.", "disponibles": NOMBRES})
             n1, n2 = n[0], n[1]
         else:
             n1, n2 = q.get("gpu1", [""])[0], q.get("gpu2", [""])[0]

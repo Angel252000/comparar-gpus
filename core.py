@@ -7,6 +7,9 @@ NOMBRES = [g["nombre"] for g in DB]
 
 def buscar(nombre):
     """Devuelve (gpu, sugerencias). Si no hay coincidencia, gpu es None."""
+    hallada = analizar(nombre)["encontradas"] if "analizar" in globals() else []
+    if len(hallada) == 1:
+        return next(g for g in DB if g["nombre"] == hallada[0]), []
     n = nombre.lower()
     for quitar in ("geforce", "radeon", "nvidia", "amd", "intel"):
         n = n.replace(quitar, "")
