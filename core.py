@@ -1,5 +1,5 @@
 """Logica compartida (CLI y API web): base de datos, busqueda y comparacion."""
-import difflib, json, pathlib
+import difflib, json, pathlib, re, unicodedata
 
 DB = json.loads((pathlib.Path(__file__).parent / "gpus.json").read_text())
 NOMBRES = [g["nombre"] for g in DB]
@@ -47,14 +47,57 @@ def comparar(a, b):
             "filas": [{"metrica": m, "v1": x, "v2": y, "unidad": u} for m, x, y, u in filas]}
 
 
+# ---------- Extraccion tolerante: miles de formas de escribir lo mismo ----------
+PREFIJOS = {"rtx", "gtx", "rx", "arc", "radeon", "geforce", "nvidia", "amd", "intel"}
+SUFIJOS = {"ti", "xt", "xtx", "super", "s"}
+
+
+def tokens(texto):
+    """'RTX5070Ti', 'rtx-5070 ti', 'Geforce  RTX 5070 TI!' -> ['geforce','rtx','5070','ti']"""
+    t = unicodedata.normalize("NFKD", texto.lower())
+    t = "".join(ch for ch in t if not unicodedata.combining(ch))       # sin acentos
+    t = re.sub(r"(?<=\d)(?=[a-z])|(?<=[a-z])(?=\d)", " ", t)           # 5070ti -> 5070 ti
+    toks = re.sub(r"[^a-z0-9]+", " ", t).split()                       # sin signos
+    out = []
+    for i, k in enumerate(toks):
+        if k == "s" and i and toks[i - 1].isdigit():                   # 4070s -> 4070 super
+            k = "super"
+        elif len(k) >= 4 and difflib.SequenceMatcher(None, k, "super").ratio() >= 0.8:
+            k = "super"                                                # suprer, sooper...
+        out.append(k)
+    return out
+
+
+def _core(nombre):
+    t = tokens(nombre)
+    while t and t[0] in PREFIJOS:
+        t = t[1:]
+    return t
+
+
+_CORES = sorted(((_core(n), n) for n in NOMBRES), key=lambda x: -len(x[0]))  # los largos primero
+
+
+def analizar(texto):
+    """Devuelve {'encontradas': [nombres en orden], 'desconocidas': [textos que parecen GPU y no estan en la base]}"""
+    t = tokens(texto)
+    encontradas, desconocidas, i = [], [], 0
+    while i < len(t):
+        for core, nombre in _CORES:
+            if t[i:i + len(core)] == core:
+                sig = t[i + len(core)] if i + len(core) < len(t) else ""
+                if sig in SUFIJOS:                                       # '5070 super' no existe en la base
+                    desconocidas.append(" ".join(t[max(i - 1, 0):i] + core + [sig]).strip())
+                elif nombre not in encontradas:
+                    encontradas.append(nombre)
+                i += len(core)
+                break
+        else:
+            if t[i].isdigit() and len(t[i]) == 4 and i and t[i - 1] in PREFIJOS:
+                desconocidas.append(f"{t[i - 1]} {t[i]}")                # 'rtx 3060' no esta en la base
+            i += 1
+    return {"encontradas": encontradas, "desconocidas": desconocidas}
+
+
 def extraer_local(texto):
-    """Sin modelo: detecta nombres de la base dentro del texto (para Vercel, donde no hay Ollama)."""
-    t = " " + texto.lower() + " "
-    hallados = []
-    for n in sorted(NOMBRES, key=len, reverse=True):  # los largos primero: 'RTX 5070 Ti' antes que 'RTX 5070'
-        i = t.find(" " + n.lower() + " ")
-        if i != -1:
-            hallados.append((i, n))
-            t = t[:i] + " " * (len(n) + 2) + t[i + len(n) + 2:]
-    hallados.sort()
-    return [n for _, n in hallados]
+    return analizar(texto)["encontradas"]
