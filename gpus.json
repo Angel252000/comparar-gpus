@@ -1,13 +1,15 @@
 [
- {"nombre": "RTX 5090", "marca": "NVIDIA", "rendimiento": 100, "fps_promedio": 190, "vram_gb": 32, "tdp_w": 575, "precio_usd": 1999},
- {"nombre": "RTX 5080", "marca": "NVIDIA", "rendimiento": 76, "fps_promedio": 145, "vram_gb": 16, "tdp_w": 360, "precio_usd": 999},
- {"nombre": "RTX 5070 Ti", "marca": "NVIDIA", "rendimiento": 66, "fps_promedio": 125, "vram_gb": 16, "tdp_w": 300, "precio_usd": 749},
- {"nombre": "RTX 5070", "marca": "NVIDIA", "rendimiento": 54, "fps_promedio": 103, "vram_gb": 12, "tdp_w": 250, "precio_usd": 549},
- {"nombre": "RTX 4090", "marca": "NVIDIA", "rendimiento": 88, "fps_promedio": 167, "vram_gb": 24, "tdp_w": 450, "precio_usd": 1599},
- {"nombre": "RTX 4070 Super", "marca": "NVIDIA", "rendimiento": 52, "fps_promedio": 99, "vram_gb": 12, "tdp_w": 220, "precio_usd": 599},
- {"nombre": "RTX 4060", "marca": "NVIDIA", "rendimiento": 33, "fps_promedio": 63, "vram_gb": 8, "tdp_w": 115, "precio_usd": 299},
- {"nombre": "RX 9070 XT", "marca": "AMD", "rendimiento": 64, "fps_promedio": 122, "vram_gb": 16, "tdp_w": 304, "precio_usd": 599},
- {"nombre": "RX 9070", "marca": "AMD", "rendimiento": 56, "fps_promedio": 106, "vram_gb": 16, "tdp_w": 220, "precio_usd": 549},
- {"nombre": "RX 7800 XT", "marca": "AMD", "rendimiento": 46, "fps_promedio": 87, "vram_gb": 16, "tdp_w": 263, "precio_usd": 499},
- {"nombre": "RX 7600", "marca": "AMD", "rendimiento": 28, "fps_promedio": 53, "vram_gb": 8, "tdp_w": 165, "precio_usd": 269}
+ {"nombre":"RTX 5090","marca":"NVIDIA","rendimiento":100,"fps_promedio":190,"vram_gb":32,"tdp_w":575,"precio_usd":1999},
+ {"nombre":"RTX 5080","marca":"NVIDIA","rendimiento":76,"fps_promedio":145,"vram_gb":16,"tdp_w":360,"precio_usd":999},
+ {"nombre":"RTX 5070 Ti","marca":"NVIDIA","rendimiento":66,"fps_promedio":125,"vram_gb":16,"tdp_w":300,"precio_usd":749},
+ {"nombre":"RTX 5070","marca":"NVIDIA","rendimiento":54,"fps_promedio":103,"vram_gb":12,"tdp_w":250,"precio_usd":549},
+ {"nombre":"RTX 4090","marca":"NVIDIA","rendimiento":88,"fps_promedio":167,"vram_gb":24,"tdp_w":450,"precio_usd":1599},
+ {"nombre":"RTX 4070 Super","marca":"NVIDIA","rendimiento":52,"fps_promedio":99,"vram_gb":12,"tdp_w":220,"precio_usd":599},
+ {"nombre":"RTX 4060","marca":"NVIDIA","rendimiento":33,"fps_promedio":63,"vram_gb":8,"tdp_w":115,"precio_usd":299},
+ {"nombre":"RX 9070 XT","marca":"AMD","rendimiento":64,"fps_promedio":122,"vram_gb":16,"tdp_w":304,"precio_usd":599},
+ {"nombre":"RX 9070","marca":"AMD","rendimiento":56,"fps_promedio":106,"vram_gb":16,"tdp_w":220,"precio_usd":549},
+ {"nombre":"RX 7800 XT","marca":"AMD","rendimiento":46,"fps_promedio":87,"vram_gb":16,"tdp_w":263,"precio_usd":499},
+ {"nombre":"RX 7600","marca":"AMD","rendimiento":28,"fps_promedio":53,"vram_gb":8,"tdp_w":165,"precio_usd":269},
+ {"nombre":"Arc B580","marca":"Intel","rendimiento":32,"fps_promedio":61,"vram_gb":12,"tdp_w":190,"precio_usd":249},
+ {"nombre":"Arc A770","marca":"Intel","rendimiento":27,"fps_promedio":51,"vram_gb":16,"tdp_w":225,"precio_usd":329}
 ]
