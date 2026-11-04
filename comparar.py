@@ -4,6 +4,10 @@ import json, sys, urllib.request
 from core import DB, NOMBRES, buscar, comparar
 
 MODEL = "gemma3:1b"
+if "--modelo" in sys.argv:  # ej: --modelo gemma3:4b
+    i = sys.argv.index("--modelo")
+    MODEL = sys.argv[i + 1]
+    del sys.argv[i:i + 2]
 URL = "http://localhost:11434/api/chat"
 
 # Definicion de la "funcion" que el modelo debe llamar
