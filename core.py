@@ -14,4 +14,8 @@ def buscar(nombre):
     norm = {x.lower(): x for x in NOMBRES}
     if n in norm:
         return next(g for g in DB if g["nombre"] == norm[n]), []
-    return None, []
+    sub = [x for k, x in norm.items() if n and (n in k or k in n)]
+    if len(sub) == 1:
+        return next(g for g in DB if g["nombre"] == sub[0]), []
+    cerca = difflib.get_close_matches(n, list(norm), n=3, cutoff=0.6)
+    return None, [norm[c] for c in cerca] or NOMBRES[:5]
