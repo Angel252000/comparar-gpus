@@ -38,3 +38,9 @@ fetch("/api/comparar?lista=1").then(r => r.json()).then(d => {
   const o = d.gpus.map(n => `<option>${n}</option>`).join("");
   $("s1").innerHTML = o; $("s2").innerHTML = o; $("s2").selectedIndex = 1;
 });
+
+document.querySelectorAll("[data-q]").forEach(a => a.addEventListener("click", e => {
+  e.preventDefault();
+  $("q").value = a.dataset.q;
+  $("f").requestSubmit();
+}));
