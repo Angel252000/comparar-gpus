@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """CLI: Ollama extrae las dos GPUs del mensaje y Python las compara."""
 import json, sys, urllib.request
-from core import NOMBRES, buscar, comparar
+from core import DB, NOMBRES, buscar, comparar
 
 MODEL = "gemma3:1b"
 URL = "http://localhost:11434/api/chat"
@@ -35,6 +35,10 @@ def imprimir(c):
 
 
 def main():
+    if "--lista" in sys.argv:
+        for g in DB:
+            print(f"{g['marca']:7}{g['nombre']:16}{g['fps_promedio']:>4} FPS  {g['vram_gb']:>2} GB  {g['precio_usd']:>5} USD")
+        return
     print("Comparador de GPUs (Ctrl+C para salir). Disponibles:\n  " + ", ".join(NOMBRES))
     while True:
         try:
