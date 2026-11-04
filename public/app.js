@@ -1,10 +1,9 @@
 const $ = id => document.getElementById(id);
 const mejor = {"FPS promedio": 1, "Rendimiento": 1, "VRAM": 1, "FPS/$100": 1, "TDP": -1, "Precio": -1};
 
-$("f").addEventListener("submit", async e => {
-  e.preventDefault();
+async function consultar(url) {
   $("msg").textContent = ""; $("t").hidden = true; $("g").textContent = "";
-  const r = await fetch("/api/comparar?q=" + encodeURIComponent($("q").value));
+  const r = await fetch(url);
   const d = await r.json();
   if (!r.ok) {
     $("msg").textContent = d.error + (d.sugerencias?.length ? " Sugerencias: " + d.sugerencias.join(", ") : "") +
@@ -20,4 +19,16 @@ $("f").addEventListener("submit", async e => {
   $("t").hidden = false;
   const g = d.ganadores;
   $("g").textContent = `Mas rapida: ${g.mas_rapida} · Mejor valor: ${g.mejor_valor} · Mas eficiente: ${g.mas_eficiente}`;
+}
+
+$("f").addEventListener("submit", e => {
+  e.preventDefault();
+  consultar("/api/comparar?q=" + encodeURIComponent($("q").value));
+});
+$("bs").addEventListener("click", () =>
+  consultar(`/api/comparar?gpu1=${encodeURIComponent($("s1").value)}&gpu2=${encodeURIComponent($("s2").value)}`));
+
+fetch("/api/comparar?lista=1").then(r => r.json()).then(d => {
+  const o = d.gpus.map(n => `<option>${n}</option>`).join("");
+  $("s1").innerHTML = o; $("s2").innerHTML = o; $("s2").selectedIndex = 1;
 });

@@ -12,3 +12,4 @@ th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right}
 th:first-child,td:first-child{text-align:left;color:var(--mut)}
 td.win{font-weight:700;color:var(--ac)}
 #msg{color:#dc2626}
+.sel{display:flex;gap:8px;align-items:center;margin-bottom:12px}select{flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg);font:inherit}
