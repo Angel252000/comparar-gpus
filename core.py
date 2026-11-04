@@ -52,8 +52,6 @@ def extraer_local(texto):
     hallados = []
     for n in sorted(NOMBRES, key=len, reverse=True):  # los largos primero: 'RTX 5070 Ti' antes que 'RTX 5070'
         i = t.find(" " + n.lower() + " ")
-        if i == -1:
-            i = t.find(" " + n.lower().split(" ", 1)[-1] + " ") if False else -1
         if i != -1:
             hallados.append((i, n))
             t = t[:i] + " " * (len(n) + 2) + t[i + len(n) + 2:]
